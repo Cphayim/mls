@@ -1,0 +1,16 @@
+$mainPick:#f41159;
+
+a {
+    text-decoration: none;
+    color: #666;
+}
+
+
+/* MUI Reset */
+.mui-bar{
+    box-shadow: 0 1px 1px #e0e0e0;
+    background-color: #fff;
+}
+.mui-bar-tab .mui-tab-item.mui-active{
+    color: $mainPick;
+}
