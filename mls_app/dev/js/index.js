@@ -1,34 +1,39 @@
 /*
+ * app 入口 底部 tab 页控制
  * @Author: Cphayim 
  * @Date: 2017-03-22 21:04:57 
  * @Last Modified by: Cphayim
- * @Last Modified time: 2017-03-22 22:14:56
+ * @Last Modified time: 2017-03-23 13:44:08
  */
-!function() {
+! function() {
     mui.init();
-    var subpages = ['subview/home-header.html'];
-    var subpage_style = {
+    var subpages = ['subview/home.html', 'subview/category.html', 'subview/cart.html', 'subview/user.html'];
+    var subpage_style = [{
+        top: '45px',
+        bottom: '51px'
+    }, {
+        top: '45px',
+        bottom: '51px'
+    }, {
         top: '0px',
-        bottom: '51px',
-        render: 'always'
-    };
+        bottom: '51px'
+    }, {
+        top: '0px',
+        bottom: '51px'
+    }];
+
     var aniShow = {};
-    //创建子页面，首个选项卡页面显示，其余隐藏
+
+    //创建子页面，首个选项卡页面显示，其它均隐藏；
     mui.plusReady(function() {
-        //获取当前webview
         var self = plus.webview.currentWebview();
-        //设置入口不隐藏
-        self.setStyle({
-            render: 'always'
-        }); //解决部分Android下返回闪屏问题
-        for (var i = 0; i < subpages.length; i++) {
+        for (var i = 0; i < 4; i++) {
             var temp = {};
-            var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+            var sub = plus.webview.create(subpages[i], subpages[i], subpage_style[i]);
             if (i > 0) {
                 sub.hide();
             } else {
-                temp[subpages[i]] = 'true';
-                //记录开启状态
+                temp[subpages[i]] = "true";
                 mui.extend(aniShow, temp);
             }
             self.append(sub);
@@ -36,11 +41,15 @@
     });
     //当前激活选项
     var activeTab = subpages[0];
-    //选项卡tap事件
+    var title = document.getElementById("title");
+    //选项卡点击事件
     mui('.mui-bar-tab').on('tap', 'a', function(e) {
         var targetTab = this.getAttribute('href');
-        //判断是否为当前选项卡页面
-        if (targetTab == activeTab) return;
+        if (targetTab == activeTab) {
+            return;
+        }
+        //更换标题
+        title.innerHTML = this.querySelector('.mui-tab-label').innerHTML == '首页' ? '美丽说' : this.querySelector('.mui-tab-label').innerHTML;
         //显示目标选项卡
         //若为iOS平台或非首次显示，则直接显示
         if (mui.os.ios || aniShow[targetTab]) {
@@ -48,16 +57,11 @@
         } else {
             //否则，使用fade-in动画，且保存变量
             var temp = {};
-            temp[targetTab] = 'true';
+            temp[targetTab] = "true";
             mui.extend(aniShow, temp);
-            plus.webview.show(targetTab, 'fade-in', 300);
-            //			plus.webview.show(targetTab);
+            plus.webview.show(targetTab, "fade-in", 300);
         }
-        //触发自定义事件
-        if (targetTab == 'chart.html') {
-            mui.fire(plus.webview.getWebviewById(targetTab), 'chartLoad');
-        }
-        //隐藏当前
+        //隐藏当前;
         plus.webview.hide(activeTab);
         //更改当前活跃的选项卡
         activeTab = targetTab;

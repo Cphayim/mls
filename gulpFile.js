@@ -3,7 +3,7 @@
  * @Author: Cphayim 
  * @Date: 2017-03-22 20:39:02 
  * @Last Modified by: Cphayim
- * @Last Modified time: 2017-03-22 21:04:49
+ * @Last Modified time: 2017-03-27 10:33:28
  */
 
 const gulp = require('gulp');
@@ -28,6 +28,7 @@ gulp.task('js', () => {
         .pipe(babel({
             presets: ['es2015']
         }))
+        // .pipe(gulp.dest('build/js'))        
         // .pipe(jshint())
         // .pipe(jshint.reporter('default'))
         .pipe(uglify({
