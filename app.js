@@ -3,7 +3,7 @@
  * @Author: Cphayim 
  * @Date: 2017-03-23 09:20:18 
  * @Last Modified by: Cphayim
- * @Last Modified time: 2017-03-24 12:17:40
+ * @Last Modified time: 2017-03-27 14:43:54
  */
 
 const express = require('express');
@@ -33,5 +33,5 @@ app.all('*', function (req, res, next) {
 app.use('/home', require('./router/home-router'));
 
 // 端口监听
-const port = 3300;
+const port = 3500;
 app.listen(port, () => console.log('mls 服务器已开启, port:' + port));
